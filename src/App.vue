@@ -1,5 +1,7 @@
 <template>
-  <div id="app">12312</div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -10,6 +12,10 @@ export default {
 </script>
 
 <style>
+html,
+body,
 #app {
+  width: 100%;
+  height: 100%;
 }
 </style>
