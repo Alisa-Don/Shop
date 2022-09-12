@@ -1,23 +1,43 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    name: "index",
-    path: "/index",
-    component: () => import("@/views/index.vue"),
+    name: 'index',
+    path: '/',
+    component: () => import('@/views/index.vue'),
   },
   {
-    name: "login",
-    path: "/login",
-    component: () => import("@/views/login.vue"),
+    name: 'login',
+    path: '/login',
+    component: () => import('@/views/login.vue'),
   },
-];
+  {
+    name: 'category',
+    path: '/category',
+    component: () => import('@/views/category.vue'),
+  },
+  {
+    name: 'cart',
+    path: '/cart',
+    component: () => import('@/views/cart.vue'),
+  },
+  {
+    name: 'mine',
+    path: '/mine',
+    component: () => import('@/views/mine.vue'),
+  },
+  {
+    name: 'productDetail',
+    path: '/productDetail',
+    component: () => import('@/views/productDetail.vue'),
+  },
+]
 
 const router = new VueRouter({
   routes,
-});
+})
 
-export default router;
+export default router

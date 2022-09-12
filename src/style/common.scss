@@ -1,0 +1,6 @@
+@import './normalize.css';
+
+// 隐藏滚动条  Chrome Safari
+::-webkit-scrollbar {
+    width: 0 !important;
+}

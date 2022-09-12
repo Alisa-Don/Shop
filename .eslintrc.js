@@ -4,14 +4,14 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "plugin:prettier/recommended",
+    'plugin:vue/essential',
+    'eslint:recommended',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
-    parser: "@babel/eslint-parser",
+    parser: '@babel/eslint-parser',
   },
   rules: {
-    "vue/multi-word-component-names": "off",
+    'vue/multi-word-component-names': 'off',
   },
-};
+}
