@@ -61,6 +61,10 @@
         <i class="iconfont icon-shoucang"></i>
         <p>收藏</p>
       </div>
+      <div class="bottom">
+        <div class="b-left" @click="toSubmitOrder">加入购物车</div>
+        <div class="b-right" @click="toSubmitOrder">购买</div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +79,9 @@ export default {
   methods: {
     back() {
       this.$router.back('/category')
+    },
+    toSubmitOrder() {
+      this.$router.push('/submitOrder')
     },
   },
 }
@@ -237,6 +244,30 @@ export default {
         color: #2b2b2b;
         margin: 0;
       }
+    }
+  }
+  .bottom {
+    display: flex;
+    position: fixed;
+    // left: 70px;
+    // bottom: 44px;
+    .b-left {
+      width: 301px;
+      height: 92px;
+      color: #fff;
+      text-align: center;
+      line-height: 92px;
+      background-color: #5bd3e9;
+      border-radius: 50px 0 0 50px;
+    }
+    .b-right {
+      width: 301px;
+      height: 92px;
+      color: #fff;
+      text-align: center;
+      line-height: 92px;
+      background-color: #f14242;
+      border-radius: 0 50px 50px 0;
     }
   }
 }

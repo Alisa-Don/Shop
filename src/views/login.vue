@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { userRegist, userLogin } from '@/api/user'
+
 export default {
   data() {
     return {
@@ -74,9 +76,41 @@ export default {
       if (this.current === 'reg') {
         // 注册
         // console.log('注册')
+        let data = {
+          account: this.phoneNum,
+          password: this.password,
+        }
+        userRegist(data)
+          .then((res) => {
+            console.log('res', res)
+            if (res.data.status === true) {
+              this.$toast(res.data.message)
+              this.current = 'login'
+            } else {
+              this.$toast(res.data.message)
+            }
+          })
+          .catch((err) => {
+            console.log('err', err)
+          })
       } else {
         // 登录
-        this.$router.push('/')
+        let data = {
+          account: this.phoneNum,
+          password: this.password,
+        }
+        userLogin(data)
+          .then((res) => {
+            console.log('res', res)
+            if (res.data.status === true) {
+              this.$router.push('/')
+            } else {
+              this.$toast(res.data.message)
+            }
+          })
+          .catch((err) => {
+            console.log('err', err)
+          })
       }
     },
     showPw() {

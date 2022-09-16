@@ -34,6 +34,11 @@ const routes = [
     path: '/productDetail',
     component: () => import('@/views/productDetail.vue'),
   },
+  {
+    name: 'submitOrder',
+    path: '/submitOrder',
+    component: () => import('@/views/submitOrder.vue'),
+  },
 ]
 
 const router = new VueRouter({
