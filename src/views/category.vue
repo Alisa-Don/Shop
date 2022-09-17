@@ -17,73 +17,12 @@
         </div>
         <div
           class="list"
-          :class="{ active: current === 'fruit' }"
-          @click="current = 'fruit'"
+          :class="{ active: current === item }"
+          @click="changeCategory(item)"
+          v-for="(item, index) in categories"
+          :key="index"
         >
-          新鲜水果
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'vagetable' }"
-          @click="current = 'vagetable'"
-        >
-          时蔬净菜
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'egg' }"
-          @click="current = 'egg'"
-        >
-          肉禽蛋品
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'seafood' }"
-          @click="current = 'seafood'"
-        >
-          海鲜水产
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'snake' }"
-          @click="current = 'snake'"
-        >
-          休闲零食
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'liquor' }"
-          @click="current = 'liquor'"
-        >
-          酒水饮料
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'oil' }"
-          @click="current = 'oil'"
-        >
-          粮油百货
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'cake' }"
-          @click="current = 'cake'"
-        >
-          蛋糕烘焙
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'food' }"
-          @click="current = 'food'"
-        >
-          美食
-        </div>
-        <div
-          class="list"
-          :class="{ active: current === 'makeup' }"
-          @click="current = 'makeup'"
-        >
-          护肤品
+          {{ item }}
         </div>
       </div>
       <div v-if="current === 'recommend'" class="content">
@@ -137,70 +76,19 @@
         </div>
       </div>
       <div v-else class="content-foods">
-        <div class="choose" @click="toProductDetail">
-          <img src="@/assets/images/products/orange.png" alt="" />
+        <div
+          class="choose"
+          @click="toProductDetail"
+          v-for="item in currentFoods"
+          :key="item._id"
+        >
+          <img :src="item.image" alt="" />
           <div class="pName">
-            <p>橙子</p>
+            <p>{{ item.name }}</p>
             <div class="pPrice">
               <div class="price">
                 <span>￥</span>
-                <span class="num">20</span>
-                /斤
-              </div>
-              <div class="add">+</div>
-            </div>
-          </div>
-        </div>
-        <div class="choose">
-          <img src="@/assets/images/products/pro2.png" alt="" />
-          <div class="pName">
-            <p>猕猴桃</p>
-            <div class="pPrice">
-              <div class="price">
-                <span>￥</span>
-                <span class="num">20</span>
-                /斤
-              </div>
-              <div class="add">+</div>
-            </div>
-          </div>
-        </div>
-        <div class="choose">
-          <img src="@/assets/images/products/pro3.png" alt="" />
-          <div class="pName">
-            <p>芒果</p>
-            <div class="pPrice">
-              <div class="price">
-                <span>￥</span>
-                <span class="num">20</span>
-                /斤
-              </div>
-              <div class="add">+</div>
-            </div>
-          </div>
-        </div>
-        <div class="choose">
-          <img src="@/assets/images/products/pro4.png" alt="" />
-          <div class="pName">
-            <p>草莓</p>
-            <div class="pPrice">
-              <div class="price">
-                <span>￥</span>
-                <span class="num">20</span>
-                /斤
-              </div>
-              <div class="add">+</div>
-            </div>
-          </div>
-        </div>
-        <div class="choose">
-          <img src="@/assets/images/products/pro5.png" alt="" />
-          <div class="pName">
-            <p>大青枣</p>
-            <div class="pPrice">
-              <div class="price">
-                <span>￥</span>
-                <span class="num">20</span>
+                <span class="num">{{ item.price }}</span>
                 /斤
               </div>
               <div class="add">+</div>
@@ -213,15 +101,43 @@
 </template>
 
 <script>
+import { getFoods } from '@/api/foods'
 export default {
   data() {
     return {
       current: 'recommend',
+      allFoods: [],
+      categories: [],
+      currentFoods: [],
     }
+  },
+  created() {
+    //Promise then catch
+    getFoods()
+      .then((res) => {
+        console.log('res', res)
+        this.allFoods = res.data
+        this.categories = res.data.map((i) => {
+          return i.category
+        })
+        this.categories = [...new Set(this.categories)]
+        console.log('this.categories', this.categories)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
   },
   methods: {
     toProductDetail() {
       this.$router.push('/productDetail')
+    },
+    changeCategory(category) {
+      console.log('category', category)
+      this.current = category
+      this.currentFoods = this.allFoods.filter((i) => {
+        return i.category === this.current
+      })
+      console.log('this.currentFoods', this.currentFoods)
     },
   },
 }

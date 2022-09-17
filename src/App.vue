@@ -1,16 +1,20 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <nav-bar v-if="false" />
+    <nav-bar v-if="showNavBar" />
   </div>
 </template>
 
 <script>
 import navBar from '@/components/navbar.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: { navBar },
+  computed: {
+    ...mapState(['showNavBar']),
+  },
 }
 </script>
 
