@@ -5,7 +5,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    userName: 'tpp',
+    showNavBar: true,
+  },
+  mutations: {
+    SET_SHOWNAVBAR(state, bool) {
+      state.showNavBar = bool
+    },
   },
 })
 

@@ -62,29 +62,9 @@
         <span>01:22:33</span>
       </div>
       <div class="bottom">
-        <div class="recommend">
-          <img src="@/assets/images/products/pro1.png" alt="" />
-          <span class="now">￥332.00</span>
-          <span class="before">￥400.00</span>
-        </div>
-        <div class="recommend">
-          <img src="@/assets/images/products/pro2.png" alt="" />
-          <span class="now">￥332.00</span>
-          <span class="before">￥400.00</span>
-        </div>
-        <div class="recommend">
-          <img src="@/assets/images/products/pro2.png" alt="" />
-          <span class="now">￥332.00</span>
-          <span class="before">￥400.00</span>
-        </div>
-        <div class="recommend">
-          <img src="@/assets/images/products/pro1.png" alt="" />
-          <span class="now">￥332.00</span>
-          <span class="before">￥400.00</span>
-        </div>
-        <div class="recommend">
-          <img src="@/assets/images/products/pro1.png" alt="" />
-          <span class="now">￥332.00</span>
+        <div class="recommend" v-for="item in discountData" :key="item._id">
+          <img :src="item.image" alt="" />
+          <span class="now">￥{{ item.price }}</span>
           <span class="before">￥400.00</span>
         </div>
       </div>
@@ -102,7 +82,29 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { getFoods } from '@/api/foods'
+export default {
+  data() {
+    return {
+      discountData: [],
+    }
+  },
+  created() {
+    getFoods()
+      .then((res) => {
+        // console.log('res', res)
+        this.discountData = res.data.filter((i) => {
+          return i.recommended === true
+        })
+        // console.log('this.discountData', this.discountData)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .index {

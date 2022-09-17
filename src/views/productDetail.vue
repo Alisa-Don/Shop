@@ -91,7 +91,7 @@ export default {
 .productDetail {
   position: relative;
   background-color: #eeeef1;
-
+  height: 100%;
   .banner {
     width: 750px;
     height: 508px;
@@ -249,8 +249,7 @@ export default {
   .bottom {
     display: flex;
     position: fixed;
-    // left: 70px;
-    // bottom: 44px;
+    bottom: 20px;
     .b-left {
       width: 301px;
       height: 92px;

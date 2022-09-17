@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store/store'
 
 Vue.use(VueRouter)
 
@@ -39,10 +40,28 @@ const routes = [
     path: '/submitOrder',
     component: () => import('@/views/submitOrder.vue'),
   },
+  {
+    name: 'upload',
+    path: '/upload',
+    component: () => import('@/views/upload.vue'),
+  },
 ]
 
 const router = new VueRouter({
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  // console.log('to', to)
+  // console.log('from', from)
+  const needNavBar = ['/', '/category', '/cart', '/mine']
+  const toPath = to.path
+  if (needNavBar.includes(toPath)) {
+    store.commit('SET_SHOWNAVBAR', true)
+  } else {
+    store.commit('SET_SHOWNAVBAR', false)
+  }
+  next()
 })
 
 export default router
