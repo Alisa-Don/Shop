@@ -78,7 +78,7 @@
       <div v-else class="content-foods">
         <div
           class="choose"
-          @click="toProductDetail"
+          @click="toProductDetail(item)"
           v-for="item in currentFoods"
           :key="item._id"
         >
@@ -91,7 +91,7 @@
                 <span class="num">{{ item.price }}</span>
                 /斤
               </div>
-              <div class="add">+</div>
+              <div class="add" @click.stop="addFood(item)">+</div>
             </div>
           </div>
         </div>
@@ -102,6 +102,7 @@
 
 <script>
 import { getFoods } from '@/api/foods'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -115,29 +116,41 @@ export default {
     //Promise then catch
     getFoods()
       .then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         this.allFoods = res.data
         this.categories = res.data.map((i) => {
           return i.category
         })
         this.categories = [...new Set(this.categories)]
-        console.log('this.categories', this.categories)
+        // console.log('this.categories', this.categories)
       })
       .catch((err) => {
         console.log('err', err)
       })
   },
   methods: {
-    toProductDetail() {
+    ...mapMutations(['ADD_FOOD']),
+    toProductDetail(item) {
+      // console.log('toProductDetail')
+      // console.log('item', item)
+      let data = JSON.stringify(item)
+      // console.log('data', data)
+      sessionStorage.setItem('foodDetail', data)
       this.$router.push('/productDetail')
     },
     changeCategory(category) {
-      console.log('category', category)
+      // console.log('category', category)
       this.current = category
       this.currentFoods = this.allFoods.filter((i) => {
         return i.category === this.current
       })
-      console.log('this.currentFoods', this.currentFoods)
+      // console.log('this.currentFoods', this.currentFoods)
+    },
+    addFood(item) {
+      // console.log('addFood')
+      // console.log(item)
+      this.ADD_FOOD(item)
+      console.log('store', this.$store.state.cartData)
     },
   },
 }

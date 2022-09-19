@@ -19,47 +19,25 @@
         <p>领券</p>
       </div>
       <van-checkbox-group v-model="foodsSelected" ref="checkboxGroup">
-        <div class="lists">
+        <div class="lists" v-for="item in cartData" :key="item.name">
           <van-checkbox
             @click="select"
             class="circle"
             icon-size="15"
             name="fooda"
           ></van-checkbox>
-          <img src="@/assets/images/products/pro1.png" alt="" />
+          <img :src="item.image" alt="" />
           <div class="wrap">
-            <div class="title">百年陈酿酿 囯窖茅台小黑瓶 150ml</div>
+            <div class="title">{{ item.name }}</div>
             <p class="volume">30ml</p>
             <div class="wRight">
               <span
-                >￥128.
-                <p>0</p>
+                >￥{{ item.price }}
+                <p>.0</p>
               </span>
-              <div class="minus">－</div>
-              <div class="number">1</div>
-              <div class="add">＋</div>
-            </div>
-          </div>
-        </div>
-        <div class="lists">
-          <van-checkbox
-            @click="select"
-            class="circle"
-            icon-size="15"
-            name="foodb"
-          ></van-checkbox>
-          <img src="@/assets/images/products/pro1.png" alt="" />
-          <div class="wrap">
-            <div class="title">百年陈酿酿 囯窖茅台小黑瓶 150ml</div>
-            <p class="volume">30ml</p>
-            <div class="wRight">
-              <span
-                >￥128.
-                <p>0</p>
-              </span>
-              <div class="minus">－</div>
-              <div class="number">1</div>
-              <div class="add">＋</div>
+              <div class="minus" @click="minusNum(item)">－</div>
+              <div class="number">{{ item.number }}</div>
+              <div class="add" @click="addNum(item)">＋</div>
             </div>
           </div>
         </div>
@@ -76,16 +54,18 @@
       <div class="total">
         <span>
           合计 :
-          <span class="pri">￥128.00</span>
+          <span class="pri">￥{{ allFoodsPrice }}</span>
         </span>
         <div class="fee">不含运费</div>
       </div>
-      <div class="pay">结算(0)</div>
+      <div class="pay" @click="toPay">结算({{ allFoodsPrice }})</div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapState } from 'vuex'
+import { submitOrder } from '@/api/order'
 export default {
   data() {
     return {
@@ -93,7 +73,16 @@ export default {
       isSlectAll: false,
     }
   },
+  computed: {
+    ...mapState(['cartData']),
+    ...mapGetters(['allFoodsPrice', 'orderData']),
+  },
+  created() {
+    console.log('cartData', this.cartData)
+    console.log('allFoodsPrice', this.allFoodsPrice)
+  },
   methods: {
+    ...mapMutations(['MINUS_FOOD', 'ADD_FOOD']),
     checkAll() {
       if (this.foodsSelected.length === 2) {
         this.$refs.checkboxGroup.toggleAll()
@@ -110,6 +99,25 @@ export default {
       if (this.foodsSelected.length === 0) {
         this.isSlectAll = false
       }
+    },
+    toPay() {
+      console.log('orderData', this.orderData)
+      submitOrder(this.orderData)
+        .then((res) => {
+          console.log('res', res)
+          this.$router.push('/OrderList')
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+
+      // this.$router.push()
+    },
+    minusNum(item) {
+      this.MINUS_FOOD(item)
+    },
+    addNum(item) {
+      this.ADD_FOOD(item)
     },
   },
 }

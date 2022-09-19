@@ -24,6 +24,7 @@
       >
         <i class="iconfont icon-gouwuche"></i>
         <span>购物车</span>
+        <div class="proNum">{{ allFoodsNum }}</div>
       </div>
       <div
         class="f-nav"
@@ -38,11 +39,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
       current: 'index',
     }
+  },
+  computed: {
+    ...mapGetters(['allFoodsNum']),
   },
   methods: {
     navChange(navName) {
@@ -75,6 +80,7 @@ export default {
       color: $color !important;
     }
     .f-nav {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -87,6 +93,20 @@ export default {
       }
       span {
         font-size: 12px;
+      }
+      .proNum {
+        $size: 30px;
+        position: absolute;
+        top: -5px;
+        right: 6px;
+        width: $size;
+        height: $size;
+        background-color: red;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 12px;
+        text-align: center;
+        line-height: $size;
       }
     }
   }

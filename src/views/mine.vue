@@ -31,7 +31,7 @@
     <div class="mineOrder">
       <div class="mineTop">
         <h4>我的订单</h4>
-        <p>查看全部 ></p>
+        <p @click="toOrderList">查看全部 ></p>
       </div>
       <div class="mineBottom">
         <div class="function">
@@ -59,7 +59,7 @@
     <div class="mineTool">
       <div class="mineTop">
         <h4>我的订单</h4>
-        <p>查看全部 ></p>
+        <p @click="toOrderList">查看全部 ></p>
       </div>
       <div class="mineBottom">
         <div class="function">
@@ -83,7 +83,15 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  methods: {
+    toOrderList() {
+      this.$router.push('/OrderList')
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .mine {

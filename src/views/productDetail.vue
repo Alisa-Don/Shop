@@ -29,13 +29,15 @@
         <i class="iconfont icon-gouwuche1"></i>
       </div>
     </div>
-    <div class="productDisplay">
-      <img src="@/assets/images/products/vagetable.png" alt="" />
+    <div class="productDisplay" @click="viewImage(detailData.image)">
+      <img :src="detailData.image" alt="" />
     </div>
     <div class="productinfo">
-      <h4>鲜果优精选水果盒子 500g</h4>
+      <h4>{{ detailData.name }}</h4>
       <div class="pro-price">
-        <span class="proNow">￥589. <span class="zero">0</span> </span>
+        <span class="proNow"
+          >￥{{ detailData.price }} <span class="zero">.0</span>
+        </span>
         <span class="proBefore">￥888.0</span>
       </div>
       <div class="pro-comment">
@@ -70,11 +72,19 @@
 </template>
 
 <script>
+import { ImagePreview } from 'vant'
 export default {
   data() {
     return {
       current: 'product',
+      detailData: {},
     }
+  },
+  created() {
+    let storage = sessionStorage.getItem('foodDetail')
+    storage = JSON.parse(storage)
+    console.log('storage', storage)
+    this.detailData = storage
   },
   methods: {
     back() {
@@ -82,6 +92,12 @@ export default {
     },
     toSubmitOrder() {
       this.$router.push('/submitOrder')
+    },
+    viewImage(url) {
+      ImagePreview({
+        images: [url],
+        closeable: true,
+      })
     },
   },
 }

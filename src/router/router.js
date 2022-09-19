@@ -45,6 +45,16 @@ const routes = [
     path: '/upload',
     component: () => import('@/views/upload.vue'),
   },
+  {
+    name: 'OrderList',
+    path: '/OrderList',
+    component: () => import('@/views/OrderList.vue'),
+  },
+  {
+    name: 'ListDetail',
+    path: '/ListDetail',
+    component: () => import('@/views/ListDetail.vue'),
+  },
 ]
 
 const router = new VueRouter({
