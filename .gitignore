@@ -22,3 +22,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 /pnpm-lock.yaml
+/.npmrc
+/yarn.lock
+/.npmrc
